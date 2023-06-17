@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% if form.errors %}
+        {{ form.errors.error}}
+    {% endif %}
+    <div class="registration">
+        <h1>Увійти до акаунту</h1>
+        <br>
+        <form action="{% url 'login' %}" method="post">
+            {% csrf_token %}
+            <span>Логін: </span>{{ form.username }}
+            <br>
+            <br>
+            <span>Пароль: </span>{{ form.password }}
+            <!--{{ form }}-->
+            <br>
+            <br>
+            <span class="rhint">Також ви можете <a class="way-to-reg" href="{% url 'register' %}">зареєструватися</a>.</span><br><br>
+            <input type="submit" class="confirm">
+        </form>
+    </div>
+
+    
+{% endblock %}

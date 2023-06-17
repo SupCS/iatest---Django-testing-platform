@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block auth_link %}
+<li> <div class="user-profile"> <span class="user"> User: {{ user }}</span><a class="profile" href="{% url 'logout' %}">Вийти</a></div></li>
+{% endblock %}
+{% block content %}
+    
+    <div class="edit-teacher">
+        <div class="container">
+            <p><b>Ваше ім'я:</b> {{ teacher.full_name }}</p>
+            <!--<h1>{{ teacher.full_name }}</h1>-->
+            <p><b>Ваші контакти:</b> {{ teacher.contacts }}</p>
+            <!--<p>{{ teacher.contacts }}</p>-->
+            <p><b>Ви викладаєте:</b></p>
+            {% for subject in subjects %}
+            <p class="subj">&emsp;{{ subject.subject_name }}</p>
+            {% endfor %}
+            <button class="submission" style="padding:4px"><a class="edit-profile" href="{% url 'profile_edit' %}">Редагувати профіль</a></button>
+        </div>
+    </div>
+    <hr>
+    <div class="top-courses-student">
+        <h1 class="your-courses">ВАШІ КУРСИ</h1>
+        <button class="join-course show-menu"> + </button>
+    </div>
+    <div class="menu hidden animate__animated">
+        <button class="submission"> <a class="teacher-course" href="{% url 'add_course' %}">Створити курс</a> </button>
+        <button class="submission"> <a class="teacher-course" href="{% url 'join_course' %}">Доєднатися до курсу</a> </button>
+    </div>
+    <div class="course-container">
+    {% for course in courses %}
+        <div class="list-course">
+            <h3>{{ course.c.title }}</h3>
+            <p>{{ course.desc }}</p>
+            <button style="background: linear-gradient(90deg, rgba(255,0,0,0.7) 0%, rgba(222,222,222,0.7) 0%);" class="submission"><a class="edit-profile" href="{% url 'course' course.c.code %}">Перейти до курсу</a></button>
+        </div>
+    {% endfor %}
+    </div>
+    <script src="{% static 'js/menu.js' %}"></script>
+{% endblock %}

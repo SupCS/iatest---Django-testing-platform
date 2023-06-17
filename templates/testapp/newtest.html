@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<input type="hidden" name="url" value="{% url 'course' code %}">
+{% csrf_token %}
+<div id="newtestcont">
+    <h1>Створити новий тест</h1>
+    <p class="hi">Назва: <input class="longblock" type="text" name="name"></p>
+    <p>Опис:</p>
+    <textarea class="bigblock" name="desc"></textarea>
+    <p class="m_points">Максимальний бал: <input class="shortblock" type="number" name="m_points" min="1" max="1000" value="1"></p>
+    <p class="t_cont">Час на проходження: <input class="t1 shortblock" type="number" name="sub_time1"  min="0" max="10" value="0">г <input class="t2 shortblock" type="number" name="sub_time2" min="0" max="59" value="0">хв <input class="t3 shortblock" type="number" min="0" max="59" name="sub_time3" value="0">с</p>
+    <p class="dt_cont">Дата та час публікації тесту: <input class="longblock" type="datetime-local" name="pub_time"></p>
+    <p class="dt_cont2">Дедлайн: <input class="longblock" type="datetime-local" name="deadline"></p>
+</div>
+    <div id="cont">
+
+    </div>
+    <div class="btns">
+    <div>
+    <button type="button" class="new_quetion_btn submission new_t_but">Додати питання</button>
+    <button type="button" class="ubutton submission new_t_but">Створити</button>
+    </div>
+    </div>
+    <script src="{% static 'js/creator.js' %}"></script>
+{% endblock %}

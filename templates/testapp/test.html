@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<input type="hidden" value="{% url 'course' course.code %}" name="url">
+<div class="info-test">
+    <div class="test-info-in-test">
+        <div class="test-information">
+    
+            <h1>{{ test.title }}</h1>
+            <h3>{{ test.description }}</h3>
+            <h3>Максимум балів: {{ test.max_points }}</h3>
+            {% if user.status == 'T' %}
+            <p>На проходження: {{ test.time_to_submit }}</p>
+            <p>Дедлайн: {{ test.deadline }}</p>
+            {% endif %}
+
+        </div>
+        {% if user.status == 'S' %}
+        <div class="timer">
+            <div class="timer-content">
+                <span class="minutes">{{ time.minutes }}</span>:<span class="sec">{{ time.secs }}</span>
+            </div>       
+        </div>
+        <script src="{% static 'js/timer.js' %}"></script>
+        {% endif %}
+    </div>
+{% if user.status == 'S' %}
+<form method="post">
+{% csrf_token %}
+{% for q in quetions %}
+<div class="question-stud" id="{{ q.quetion.id }}">
+    <h3>{{ q.quetion.content }}</h3>
+        {% for answer in q.answers %}
+            {% if q.type == 'radio' %}
+                <p><input type="radio" name="{{ q.quetion.id }}" value="{{ answer.id }}">{{ answer.content }}</p>
+            {% elif q.type == 'check' %}
+                <p><input type="checkbox" name="{{ answer.id }}">{{ answer.content }}</p>
+            {% endif %}
+        {% endfor %}
+        <p class="hint-quest">За відповідь: {{ q.quetion.points }} балів</p>
+            {% if q.type == 'check' %}
+                <p class="hint-quest">Завдання з кількома правильними відповідями</p>
+            {% else %}
+                <p class="hint-quest">Завдання з однією правильною відповіддю</p>
+        {% endif %}
+</div>
+{% endfor %}
+<input class="submit-test" type="submit" value="Підтвердити">
+</form>
+{% else %}
+    {% for q in quetions %}
+    <div class="tests-teacher">
+        <h3>{{ q.quetion.content }}</h3>
+        <p>За відповідь: {{ q.quetion.points }} балів</p>
+            {% for answer in q.answers %}
+                <p>{{ forloop.counter }}. {% if answer.is_correct %}[CORRECT] {% endif %}{{ answer.content }}</p>
+            {% endfor %}
+    </div>
+{% endfor %}
+{% endif %}
+</div>
+{% endblock %}

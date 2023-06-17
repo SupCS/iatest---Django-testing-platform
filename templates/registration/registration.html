@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="registration">
+        <h1>Реєстрація</h1>
+        <br>
+        <form action="{% url 'register' %}" method="post">
+            {% csrf_token %}
+            <div style="margin:0px 0px 10px 0px">Логін: {{ form.username }}</div>
+            <h6>Має складатись з символів англійського алфавіту, цифр чи спеціальних символів</h6>
+            <div style="margin:10px 0px">Пароль: {{ form.password1 }}</div>
+            <h6>Ваш пароль не має бути схожим на логін</h6>
+            <h6>Ваш пароль має складатися принаймні з 8 символів</h6>
+            <h6>Ваш пароль не може складатися лише з цифр</h6>
+            <div style="margin:10px 0px">Підтвердження паролю: {{ form.password2 }}</div>
+            <h6>Уведіть пароль ще раз, для підтвердження</h6>
+            <div style="margin:10px 0px">Статус: {{ form.status }}</div>
+            <!--{{ form }}-->
+            <input  type="submit" class="confirm">
+        </form>
+    </div>
+{% endblock %}

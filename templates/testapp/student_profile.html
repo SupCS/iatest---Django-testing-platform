@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block auth_link %}
+<li> <div class="user-profile"> <span class="user">User: {{ user }}</span> <a class="profile" href="{% url 'logout' %}">Вийти</a></div></li>
+{% endblock %}
+{% block content %}
+    <div class="profile-student">
+        <div class="container">
+            <p>Ваше ім'я: {{ student.full_name }} </p>
+            <!--<h1>{{ student.full_name }}</h1>-->
+            <p>Ви знаходитесь у групі: {{ student.group.group_code }} </p>
+            <!--<h1>{{ student.group.group_code }}</h1> -->
+            <button class="submission" style="padding:4px"><a class="edit-profile" href="{% url 'profile_edit' %}">Редагувати профіль</a></button>
+        </div>
+    </div>
+    <hr>
+    <div class="top-courses-student">
+    <h1 class="your-courses">Ваші курси:</h1>
+    <button class="join-course"><a class="link-course" href="{% url 'join_course' %}">+</a></button>
+    </div>
+    <div class="course-container">
+    {% for course in courses %}
+        <div class="list-course">
+            <h3>{{ course.c.title }}</h3>
+            <p>{{ course.desc }}</p>
+            <button style="background: linear-gradient(90deg, rgba(255,0,0,0.7) 0%, rgba(222,222,222,0.7) 0%);" class="submission"><a class="edit-profile" href="{% url 'course' course.c.code %}">Перейти до курсу</a></button>
+        </div>
+    {% endfor %}
+    </div>
+{% endblock %}

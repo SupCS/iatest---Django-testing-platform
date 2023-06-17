@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="test-overview">
+    <h1>Оцінки в {{ test.title }}</h1>
+    <table class="table-test">
+    <tr>
+        <th class="name">Ім'я</th>
+        <th>Група</th>
+        <th>Оцінка</th>
+    </tr>
+    {% for sub in subs %}
+        <tr>
+            <th>{{ sub.student.full_name }}</th>
+            <th>{{ sub.student.group.group_code }}</th>
+            <th>{{ sub.points }}</th>
+        </tr>
+    {% endfor %}
+    </table>
+</div>
+{% endblock %}

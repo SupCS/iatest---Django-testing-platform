@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+    <script>
+        $(document).ready(function() {
+            $('#dropdown').change( function() {
+                console.log(1);
+                if ($(this).val() === 'add') {
+                    console.log(2);
+                    $('#new_group').css('display','block');
+                } else {
+                    console.log(1);
+                    $('#new_group').css('display','none');
+                }
+            });
+        });
+        
+    </script>
+    <form method="post" >
+        {% csrf_token %}
+        <div class="edit-student">
+            <p>Повне ім'я: <input class="input-teacher" type="text" name="full_name" value="{{ student.full_name }}"></p>
+            <p>Група: 
+            <select class="group" name="group" id="dropdown">
+                {% for group in groups %}
+                    {% if group == student.group %}
+                        <option selected>{{ group.group_code }}</option>
+                    {% else %}
+                        <option>{{ group.group_code }}</option>
+                    {% endif %}
+                {% endfor %}
+                <option value="add">СТВОРИТИ</option>
+            </select>
+            </p>
+            <div id="new_group" style="display:none">
+                <p>Вdедіть назву групи:</p>
+                <input class="input-teacher" type="text" maxlength="5" name="n_group">
+            </div>
+            <p></p>
+            <input class="submission" type="submit">
+        </div>
+    </form>
+{% endblock %}

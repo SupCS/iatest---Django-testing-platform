@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="test-overview">
+<h1>Журнал {{ course.title }}</h1>
+<table class="table-test">
+<tr>
+    <th style="width:330px">Ім'я</th>
+    <th style="width:65px">Група</th>
+    {% for test in tests %}
+        <th style="width:100px">{{ test.title }}</th>
+    {% endfor %}
+</tr>
+{% for stud in students %}
+    <tr>
+        <th>{{ stud.student.full_name }}</th>
+        <th>{{ stud.student.group.group_code }}</th>
+        {% for mark in stud.results %}
+            {% if mark.id %}
+            <th><a href="{% url 'answers_overview' mark.id %}">{{ mark.mark }}</a></th>
+            {% else %}
+            <th><a>{{ mark.mark }}</a></th>
+            {% endif %}
+        {% endfor %}
+    </tr>
+{% endfor %}
+</table>
+</div>
+<div class="pages">
+{% if page != 1 %}
+    <button class="submission pages-jour"><a href="{% url 'c_overview' course.code %}?page={{page|add:-1}}">Назад</a></button>
+{% endif %}
+{% if page >= 4 %}
+    <button class="submission pages-jour"><a href="{% url 'c_overview' course.code %}?page=1">1</a></button>
+{% endif %}
+{% if page > 4 %}
+    ...
+{% endif %}
+{% if page >= 3 %}
+    <button class="submission pages-jour"><a href="{% url 'c_overview' course.code %}?page={{page|add:-2}}">{{ page|add:-2 }}</a></button>
+{% endif %}
+{% if page >= 2 %}
+    <button class="submission pages-jour"><a href="{% url 'c_overview' course.code %}?page={{page|add:-1}}">{{ page|add:-1 }}</a></button>
+{% endif %}
+    <button class="submission pages-jour"><a href="#">{{ page }}</a></button>
+{% if page <= pages|add:-1 %}
+    <button class="submission pages-jour"><a href="{% url 'c_overview' course.code %}?page={{page|add:1}}">{{ page|add:1 }}</a></button>
+{% endif %}
+{% if page <= pages|add:-2 %}
+    <button class="submission pages-jour"><a href="{% url 'c_overview' course.code %}?page={{page|add:2}}">{{ page|add:2 }}</a></button>
+{% endif %}
+{% if page < pages|add:-3 %}
+    ...
+{% endif %}
+{% if page <= pages|add:-3 %}
+    <button class="submission pages-jour"><a href="{% url 'c_overview' course.code %}?page={{pages}}">{{ pages }}</a></button>
+{% endif %}
+{% if page != pages %}
+    <button class="submission pages-jour"><a href="{% url 'c_overview' course.code %}?page={{page|add:+1}}">Вперед</a></button>
+{% endif %}
+</div>
+{% endblock %}

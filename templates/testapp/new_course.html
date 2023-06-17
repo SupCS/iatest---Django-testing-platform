@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="new-course">
+    <h1>Створити новий курс</h1>
+    <form method="post" style="margin:auto; width:85%">
+        {% csrf_token %}
+   
+        <p class="change">Назва: <input class="input-teacher" type="text" name="name"></p>
+        <div class="change">
+        <p>Опис курсу: </p><textarea class="description" type="texta" name="description"></textarea>
+        </div>
+        <input style="margin-top:3px" class="confirm submission" type="submit" value="Підтвердити">
+    </form>
+</div>
+{% endblock %}

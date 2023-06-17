@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="subinfos">
+    <h2>Тест: {{ submition.test.title }}</h2>
+    <h2>Студент: {{ submition.student.full_name }}</h2>
+    <h2>Оцінка: {{ submition.points }}</h2>
+    </div>
+    {% for question in questions %}
+        <div class="question-box">
+        <h3>{{forloop.counter}}. {{ question.question.content }}</h3>
+        <div class="answer-box">
+        {% if question.type == 'check' %}
+            {% for answer in question.answers %}
+                {% if answer.student_choice %}
+                    {% if answer.answer.is_correct %}
+                        <p style="color: green"><input type="checkbox" checked disabled>{{ answer.answer.content }}</p>
+                    {% else %}
+                        <p style="color: red"><input type="checkbox" checked disabled>{{ answer.answer.content }}</p>
+                    {% endif %}
+                {% else %}
+                    {% if answer.answer.is_correct %}
+                        <p style="color: green"><input type="checkbox" disabled>{{ answer.answer.content }}</p>
+                    {% else %}
+                        <p style="color: red"><input type="checkbox" disabled>{{ answer.answer.content }}</p>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            {% for answer in question.answers %}
+                {% if answer.student_choice %}
+                    {% if answer.answer.is_correct %}
+                        <p style="color: green"><input type="radio" checked disabled>{{ answer.answer.content }}</p>
+                    {% else %}
+                        <p style="color: red"><input type="radio" checked disabled>{{ answer.answer.content }}</p>
+                    {% endif %}
+                {% else %}
+                    {% if answer.answer.is_correct %}
+                        <p style="color: green"><input type="radio" disabled>{{ answer.answer.content }}</p>
+                    {% else %}
+                        <p><input type="radio" disabled>{{ answer.answer.content }}</p>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        </div>
+        </div>
+    {% endfor %}
+
+{% endblock %}

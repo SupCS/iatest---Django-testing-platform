@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="edit-teacher">
+    <form  method="post">
+    {% csrf_token %}
+    <p class="change">Ваше повне ім'я:
+    <input class="input-teacher" type="text" name="full_name" value="{{ teacher.full_name }}"></p>
+    <p class="change">Ваші контактні дані:
+    <input class="input-teacher" type="text" name="contacts" value="{{ teacher.contacts }}"></p>
+    <div class="change">
+    <p>Предмети, які ви викладаєте:             </p>
+    <select class="list" name="subjects" id="dropdown" multiple>
+        {% for subject in subjects %}
+            {% if subject in sel_subjects %}
+                <option selected>{{ subject.subject_name }}</option>
+            {% else %}
+                <option>{{ subject.subject_name }}</option>
+            {% endif %}
+        {% endfor %}
+    </select>
+    <br>
+    </div>
+    <a class="change" href="{% url 'add_subject' %}">Немає шуканого предмету?</a>
+    <p></p>
+    <input class="change submission" type="submit" value="Оновити">
+    </div>
+    </form>
+{% endblock %}
